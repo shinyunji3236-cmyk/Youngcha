@@ -1,8 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,126 +17,65 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* 1. 상단 유틸리티 배너 (대한민국 구석구석 공공 포털 감성) */}
-      <div className="
-        hidden border-b border-slate-800 bg-slate-900 px-4 py-1.5 text-xs
-        text-slate-300
-        sm:block
-      "
-      >
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
+      {/* 1. 상단 유틸리티 배너 */}
+      <div className="bg-slate-900 text-slate-300 text-xs py-2 px-4 hidden sm:block border-b border-slate-800">
+        <div className="mx-auto flex max-w-screen-xl items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="
-              inline-flex items-center gap-1 rounded-sm bg-blue-600 px-1.5
-              py-0.5 text-[10px] font-bold tracking-wider text-white
-            "
-            >
-              KOREA TRIP
+            <span className="inline-flex items-center gap-1 rounded bg-blue-600 px-2 py-0.5 text-[10px] font-bold text-white tracking-wider">
+              MARKET TRIP
             </span>
-            <span className="font-medium text-slate-300">
-              대한민국 구석구석 테마 여행 · 정과 활기가 넘치는 영등포 전통시장
+            <span className="text-slate-300 font-medium">
+              정과 활기가 넘치는 서울의 대표 명소 · 영등포 전통시장 공식 안내
             </span>
           </div>
-          <div className="flex items-center gap-4 text-xs text-slate-400">
-            <span className="flex items-center gap-1">
-              <span className="
-                inline-block size-1.5 rounded-full bg-emerald-400
-              "
-              >
-              </span>
+          <div className="flex items-center gap-4 text-slate-400 text-xs">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block size-2 rounded-full bg-emerald-400 animate-pulse"></span>
               오늘 시장 정상영업
             </span>
             <span className="text-slate-600">|</span>
-            <span>고객안내센터: 02-2634-1388</span>
+            <span>고객지원센터 02-2634-1388</span>
           </div>
         </div>
       </div>
 
       {/* 2. 메인 GNB 헤더 */}
-      <header className="
-        sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-xs
-        backdrop-blur-md transition-all
-      "
-      >
-        <div className="
-          mx-auto flex h-20 max-w-7xl items-center justify-between px-4
-          sm:px-6
-          lg:px-8
-        "
-        >
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
+        <div className="mx-auto flex h-20 max-w-screen-xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* 로고 영역 */}
           <Link href="/" className="group flex items-center gap-3">
-            <div className="
-              flex size-11 items-center justify-center rounded-2xl
-              bg-linear-to-tr from-blue-700 via-blue-600 to-sky-500 text-white
-              shadow-md shadow-blue-500/20 transition-transform
-              group-hover:scale-105
-            "
-            >
+            <div className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-700 via-blue-600 to-sky-500 text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
               <span className="text-2xl">🏛️</span>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="
-                  text-xl font-black tracking-tight text-slate-900
-                  transition-colors
-                  group-hover:text-blue-600
-                  sm:text-2xl
-                "
-                >
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
                   영등포 전통시장
                 </span>
-                <span className="
-                  hidden rounded-md border border-blue-200/60 bg-blue-50 px-1.5
-                  py-0.5 text-[11px] font-extrabold text-blue-700
-                  sm:inline-block
-                "
-                >
-                  구석구석
-                </span>
               </div>
-              <span className="
-                text-[11px] font-bold tracking-wider text-slate-500
-              "
-              >
+              <span className="text-[11px] font-bold tracking-wider text-slate-500">
                 YEONGDEUNGPO TRADITIONAL MARKET
               </span>
             </div>
           </Link>
 
           {/* 데스크탑 메인 내비게이션 */}
-          <nav className="
-            hidden items-center gap-1
-            md:flex
-            lg:gap-2
-          "
-          >
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             {navItems.map((item) => {
-              const isActive = pathname?.includes(item.href);
+              const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`
-                    group relative rounded-xl px-4 py-2.5 text-base font-bold
-                    transition-all duration-200
-                    ${
-                isActive
-                  ? 'bg-blue-50/70 font-extrabold text-blue-600'
-                  : `
-                    text-slate-700
-                    hover:bg-slate-50 hover:text-blue-600
-                  `
-                }
-                  `}
+                  className={`relative px-4 py-2.5 rounded-xl text-base font-bold transition-all duration-200 group ${
+                    isActive
+                      ? 'text-blue-600 bg-blue-50/70 font-extrabold'
+                      : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50'
+                  }`}
                 >
                   <span className="relative z-10">{item.label}</span>
                   {isActive && (
-                    <span className="
-                      absolute bottom-0 left-1/2 h-0.5 w-6 -translate-x-1/2
-                      rounded-full bg-blue-600
-                    "
-                    />
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-blue-600 rounded-full" />
                   )}
                 </Link>
               );
@@ -147,14 +86,7 @@ export const Navbar = () => {
           <div className="flex items-center gap-3">
             <Link
               href="/map"
-              className="
-                hidden items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2
-                text-xs font-bold text-white shadow-sm shadow-blue-600/30
-                transition-all
-                hover:bg-blue-700
-                active:scale-95
-                lg:inline-flex
-              "
+              className="hidden lg:inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-sm shadow-blue-600/30 hover:bg-blue-700 active:scale-95 transition-all"
             >
               <span>길찾기 바로가기</span>
               <svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -166,26 +98,18 @@ export const Navbar = () => {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="
-                inline-flex size-11 items-center justify-center rounded-xl
-                border border-slate-200 bg-white text-slate-700
-                hover:bg-slate-50 hover:text-slate-900
-                focus:ring-2 focus:ring-blue-500 focus:outline-none
-                md:hidden
-              "
+              className="inline-flex size-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 md:hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label="메뉴 열기"
             >
-              {isMobileMenuOpen
-                ? (
-                    <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  )
-                : (
-                    <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                  )}
+              {isMobileMenuOpen ? (
+                <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
@@ -193,53 +117,31 @@ export const Navbar = () => {
 
       {/* 3. 모바일 반응형 슬라이드오버 네비게이션 드로어 */}
       {isMobileMenuOpen && (
-        <div className="
-          fixed inset-0 z-50
-          md:hidden
-        "
-        >
+        <div className="fixed inset-0 z-50 md:hidden">
           {/* 백드롭 딤 오버레이 */}
           <div
-            className="
-              fixed inset-0 animate-in bg-slate-900/60 backdrop-blur-xs
-              transition-opacity fade-in
-            "
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity animate-in fade-in"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
           {/* 슬라이드 드로어 패널 */}
-          <div className="
-            fixed inset-y-0 right-0 z-50 flex w-full max-w-xs animate-in
-            flex-col justify-between bg-white p-6 shadow-2xl duration-300
-            slide-in-from-right
-          "
-          >
+          <div className="fixed inset-y-0 right-0 z-50 w-full max-w-xs bg-white shadow-2xl p-6 flex flex-col justify-between animate-in slide-in-from-right duration-300">
             <div>
               {/* 드로어 헤더 */}
-              <div className="
-                flex items-center justify-between border-b border-slate-100 pb-5
-              "
-              >
+              <div className="flex items-center justify-between pb-5 border-b border-slate-100">
                 <div className="flex items-center gap-2">
-                  <div className="
-                    flex size-9 items-center justify-center rounded-xl
-                    bg-blue-600 text-lg font-bold text-white
-                  "
-                  >
+                  <div className="flex size-9 items-center justify-center rounded-xl bg-blue-600 text-white font-bold text-lg">
                     🏛️
                   </div>
                   <div>
-                    <h3 className="text-base font-extrabold text-slate-900">영등포 전통시장</h3>
-                    <p className="text-[10px] font-semibold text-blue-600">대한민국 구석구석 테마관</p>
+                    <h3 className="font-extrabold text-slate-900 text-base">영등포 전통시장</h3>
+                    <p className="text-[10px] text-blue-600 font-semibold">공식 안내 서비스</p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="
-                    rounded-lg p-2 text-slate-400
-                    hover:bg-slate-100 hover:text-slate-600
-                  "
+                  className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
                   aria-label="메뉴 닫기"
                 >
                   <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -251,26 +153,17 @@ export const Navbar = () => {
               {/* 내비게이션 링크 리스트 */}
               <nav className="mt-6 space-y-2">
                 {navItems.map((item) => {
-                  const isActive = pathname?.includes(item.href);
+                  const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className={`
-                        flex items-center gap-3 rounded-2xl p-3.5 transition-all
-                        ${
-                    isActive
-                      ? `
-                        border border-blue-100 bg-blue-50 font-bold
-                        text-blue-700
-                      `
-                      : `
-                        font-semibold text-slate-800
-                        hover:bg-slate-50
-                      `
-                    }
-                      `}
+                      className={`flex items-center gap-3 p-3.5 rounded-2xl transition-all ${
+                        isActive
+                          ? 'bg-blue-50 text-blue-700 border border-blue-100 font-bold'
+                          : 'text-slate-800 hover:bg-slate-50 font-semibold'
+                      }`}
                     >
                       <span className="text-2xl">{item.icon}</span>
                       <div className="flex flex-col">
@@ -284,25 +177,16 @@ export const Navbar = () => {
             </div>
 
             {/* 드로어 하단 정보 */}
-            <div className="
-              space-y-3 border-t border-slate-100 pt-6 text-xs text-slate-500
-            "
-            >
-              <div className="
-                rounded-xl border border-slate-100 bg-slate-50 p-3.5
-              "
-              >
-                <p className="
-                  flex items-center gap-1.5 font-bold text-slate-700
-                "
-                >
-                  <span>📞 고객상담 및 길 안내</span>
+            <div className="pt-6 border-t border-slate-100 space-y-3 text-xs text-slate-500">
+              <div className="rounded-xl bg-slate-50 p-3.5 border border-slate-100">
+                <p className="font-bold text-slate-700 flex items-center gap-1.5">
+                  <span>📞 고객지원센터 & 상인회</span>
                 </p>
-                <p className="mt-1 text-sm font-bold text-blue-600">02-2634-1388</p>
-                <p className="mt-0.5 text-[11px] text-slate-400">평일/주말 09:00 ~ 21:00 연중무휴</p>
+                <p className="text-blue-600 font-bold text-sm mt-1">02-2634-1388</p>
+                <p className="text-[11px] text-slate-400 mt-0.5">운영시간: 09:00 ~ 21:00 연중무휴</p>
               </div>
               <p className="text-center text-[11px] text-slate-400">
-                © 영등포 전통시장 · 한국관광공사 테마마켓
+                © 영등포 전통시장 공식 홈페이지
               </p>
             </div>
           </div>
